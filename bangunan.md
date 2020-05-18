@@ -4,7 +4,7 @@
 
 Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangunan pada citra satelit menggunakan pretrained model **YOLOv3**. Deteksi bangunan pada model akan menggunakan beberapa baris kode sederhana dari **ImageAI** sebagai pustaka python untuk membangun sistem dengan kemampuan deep learning dan penglihatan komputer. Tahapan training model dilakukan menggunakan komputer dari **Google Colab**. 
 
-### Daftar Isi
+## Daftar Isi
 - <a href="#persiapan" > :white_square_button: Persiapan</a>
 - <a href="#pembuatansetdata" > :white_square_button: Pembuatan set data</a>
 - <a href="#pembuatanskripkode1" > :white_square_button: Pembuatan skrip kode training model</a>
@@ -13,7 +13,7 @@ Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangu
 - <a href="#deteksibangunan" > :white_square_button: Deteksi bangunan</a>
 
 
-### Persiapan
+## Persiapan
 <div id="persiapan"></div>
 
 Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan adalah sebagai berikut:
@@ -24,7 +24,7 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 - **Akun Google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
 
 
-### Pembuatan Set Data
+## Pembuatan Set Data
 <div id="pembuatansetdata"></div>
 
 Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set data berisi kumpulan citra satelit yang berisi gambar bangunan. Sampel akan digunakan pada proses training model untuk mempelajari dan mengenali karakteristik bangunan pada citra satelit. Pembuatan set data dilakukan dengan tahapan sebagai berikut:
@@ -76,7 +76,7 @@ Kode skrip diatas memiliki penjelasan untuk setiap baris sebagai berikut:
    - **train_from_pretrained_model** : berisi pretrained model yang akan digunakan
 6. Memulai proses training model
 
-### Training Model
+## Training Model
 <div id="trainingmodel"></div>
 
 Sebelum melakukan training model, buat **akun Google baru** terlebih dahulu. Setelah akun Google yang baru telah dibuat, kemudian 
@@ -84,7 +84,7 @@ Training model dilakukan menggunakan komputer dari **Google Colab** dengan tahap
 1. 
 
 
-### Pembuatan Skrip Kode Deteksi Bangunan
+## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
 
