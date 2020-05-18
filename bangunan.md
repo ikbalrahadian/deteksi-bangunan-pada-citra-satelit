@@ -36,23 +36,55 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
 6. Masukkan 80% set data ke dalam folder *train* dan 20% set data ke dalam folder *validation*. Dalam hal ini 80% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder *images* dan *annotations* pada folder *train*, dan 20% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder *images* dan *annotations* pada folder *validation*.
 6. Setelah hal di atas selesai dilakukan, akan terlihat struktur folder set data sebagai berikut:
    ```
-       >> bangunan----------->> train----------->> images----------->> 1.jpg
-             |                    |                                    2.jpg
-             |                    |                                    3.jpg
+       >> bangunan----------->> train---------->> images------------>> 1.jpg
              |                    |                                    ...
-             |                    |                            
+             |                    |                                    240.jpg
              |                     ------------>> annotations------->> 1.xml
-             |                                                         2.xml
-             |                                                         3.xml
              |                                                         ...
-             |                        
-              -------------->> validation------>> images------------>> ...
-                                  |                                    298.jpg
-                                  |                                    299.jpg
+             |                                                         240.xml
+              -------------->> validation------>> images------------>> 241.jpg
+                                  |                                    ...
                                   |                                    300.jpg
-                                  |                            
-                                   ------------>> annotations------->> ...
-                                                                       298.xml
-                                                                       299.xml
+                                   ------------>> annotations------->> 241.xml
+                                                                       ...
                                                                        300.xml
    ```
+
+
+### Pembuatan skrip kode training model
+<div id="pembuatanskripkode1"></div>
+
+Skrip kode untuk melakukan training model ditulis dalam format .py dan diberi nama *training.py*. Penulisan skrip kode dilakukan dengan menggunakan VS Code dengan skrip kode sebagai berikut:
+```python
+from imageai.Detection.Custom import DetectionModelTrainer
+trainer = DetectionModelTrainer()
+trainer.setModelTypeAsYOLOv3()
+trainer.setDataDirectory(data_directory="bangunan")
+trainer.setTrainConfig(object_names_array=["bangunan"], batch_size=4, num_experiments=100, train_from_pretrained_model="pretrained-yolov3.h5")
+trainer.trainModel()
+```
+
+Kode skrip diatas memiliki penjelasan untuk setiap baris sebagai berikut:
+1. Importing kelas training model deteksi dari pustaka python ImageAI
+2. Pendefinisian model trainer : deteksi
+3. Pendefinisian tipe jaringan deep learning : YOLOv3
+4. Pendefinisian direktori set data yang digunakan : folder 'bangunan'
+5. Pendefinisian konfigurasi model trainer dalam parameter berikut:
+   - object_names_array : berisi nama objek dalam set data
+   - batch_size : berisi ukuran batch dalam proses training
+   - num_experiments : berisi jumlah iterasi jaringan melakukan training set data
+   - train_from_pretrained_model : berisi pretrained model yang akan digunakan
+   - trainer.trainModel() : untuk memulai proses training model
+
+### Training Model
+<div id="trainingmodel"></div>
+
+
+
+### Pembuatan skrip kode deteksi bangunan
+<div id="pembuatanskripkode2"></div>
+
+
+
+### Deteksi Bangunan
+<div id="deteksibangunan"></div>
