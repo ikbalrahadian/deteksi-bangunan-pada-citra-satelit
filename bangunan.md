@@ -2,7 +2,7 @@
 
 ---
 
-Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangunan pada citra satelit menggunakan pretrained model **YOLOv3**. Deteksi bangunan pada model akan menggunakan beberapa baris kode sederhana dari **ImageAI** sebagai pustaka python untuk membangun sistem dengan kemampuan deep learning dan penglihatan komputer. Tahapan training model dilakukan menggunakan komputer virtual dari **Google Colab**. 
+Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangunan pada citra satelit menggunakan pretrained model **YOLOv3**. Deteksi bangunan pada model akan menggunakan beberapa baris kode sederhana dari **ImageAI** sebagai pustaka python untuk membangun sistem dengan kemampuan deep learning dan penglihatan komputer. Tahapan training model dilakukan menggunakan komputer dari **Google Colab**. 
 
 ### Daftar Isi
 - <a href="#persiapan" > :white_square_button: Persiapan</a>
@@ -21,10 +21,10 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 - **Pretrained model YOLOv3** sebagai model yang telah dilatih sebelumnya menggunakan set data COCO dapat diunduh pada laman *pjreddie* : (https://pjreddie.com/media/files/yolov3.weights). Pretrained model ini akan dilatih untuk mendeteksi bangunan menggunakan set data baru.
 - **Labelimg** sebagai alat anotasi grafis dapat dicari dan diunduh pada laman : (https://github.com/tzutalin/labelImg). Labelimg digunakan sebagai Supervised Learning dengan memberikan anotasi pada sampel bangunan yang terdapat pada set data citra satelit. Anotasi akan disimpan sebagai file XML untuk masing-masing citra pada set data.
 - **VS Code** sebagai teks editor untuk melakukan pembuatan skrip kode training model dan deteksi bangunan dapat diunduh pada laman *Visual Studio Code* : (https://code.visualstudio.com/).
-- **Akun google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
+- **Akun Google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
 
 
-### Pembuatan set data
+### Pembuatan Set Data
 <div id="pembuatansetdata"></div>
 
 Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set data berisi kumpulan citra satelit yang berisi gambar bangunan. Sampel akan digunakan pada proses training model untuk mempelajari dan mengenali karakteristik bangunan pada citra satelit. Pembuatan set data dilakukan dengan tahapan sebagai berikut:
@@ -51,10 +51,10 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
    ```
 
 
-### Pembuatan skrip kode training model
+### Pembuatan Skrip Kode Training Model
 <div id="pembuatanskripkode1"></div>
 
-Skrip kode untuk melakukan training model ditulis dalam format .py dan diberi nama *training.py*. Penulisan skrip kode dilakukan dengan menggunakan VS Code dengan skrip kode sebagai berikut:
+Skrip kode untuk melakukan training model disimpan dalam format .py dan diberi nama *training.py*. Penulisan skrip kode dilakukan dengan menggunakan **VS Code** sebagai berikut:
 ```python
 from imageai.Detection.Custom import DetectionModelTrainer
 trainer = DetectionModelTrainer()
@@ -70,18 +70,21 @@ Kode skrip diatas memiliki penjelasan untuk setiap baris sebagai berikut:
 3. Pendefinisian tipe jaringan deep learning : YOLOv3
 4. Pendefinisian direktori set data yang digunakan : folder 'bangunan'
 5. Pendefinisian konfigurasi model trainer dalam parameter berikut:
-   - object_names_array : berisi nama objek dalam set data
-   - batch_size : berisi ukuran batch dalam proses training
-   - num_experiments : berisi jumlah iterasi jaringan melakukan training set data
-   - train_from_pretrained_model : berisi pretrained model yang akan digunakan
-   - trainer.trainModel() : untuk memulai proses training model
+   - **object_names_array** : berisi nama objek dalam set data
+   - **batch_size** : berisi ukuran batch dalam proses training
+   - **num_experiments** : berisi jumlah iterasi jaringan melakukan training set data
+   - **train_from_pretrained_model** : berisi pretrained model yang akan digunakan
+6. Memulai proses training model
 
 ### Training Model
 <div id="trainingmodel"></div>
 
+Sebelum melakukan training model, buat **akun Google baru** terlebih dahulu. Setelah akun Google yang baru telah dibuat, kemudian 
+Training model dilakukan menggunakan komputer dari **Google Colab** dengan tahapan sebagai berikut:
+1. 
 
 
-### Pembuatan skrip kode deteksi bangunan
+### Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
 
