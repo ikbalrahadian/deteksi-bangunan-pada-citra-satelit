@@ -28,7 +28,7 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 <div id="pembuatansetdata"></div>
 
 Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set data berisi kumpulan citra satelit yang berisi gambar bangunan. Sampel akan digunakan pada proses training model untuk mempelajari dan mengenali karakteristik bangunan pada citra satelit. Pembuatan set data dilakukan dengan tahapan sebagai berikut:
-1. Menyiapkan citra satelit berukuran 600x600 piksel yang berisi objek bangunan, jumlah citra satelit yang direkomendasikan adalah 300 (menghasilkan akurasi deteksi >75%). Penamaan citra satelit disarankan mengikuti urutan angka (misal: 1.jpg, 2.jpg, ..., 300.jpg).
+1. Menyiapkan citra satelit berukuran 600x600 piksel yang berisi objek bangunan, jumlah citra satelit yang direkomendasikan adalah >300 (menghasilkan akurasi deteksi >75%). Penamaan citra satelit disarankan mengikuti urutan angka (misal: 1.jpg, 2.jpg, ..., 300.jpg). 
 2. Melakukan anotasi objek bangunan pada setiap citra satelit di set data menggunakan labelimg. Anotasi dilakukan dengan memberikan kotak pembatas dan label/nama pada setiap sampel bangunan. Anotasi akan menghasilkan file berekstensi XML untuk setiap citra pada set data (misal: 1.xml, 2.xml, ..., 300.xml).
 3. Setelah seluruh pasangan citra satelit dan anotasi objek bangunan selesai dibuat, kemudian buat folder baru untuk menyimpan set data dengan nama *bangunan*.
 4. Dalam folder *bangunan* kemudian buat dua folder baru dengan nama *train* dan *validation*.
@@ -89,5 +89,5 @@ Training model dilakukan menggunakan komputer dari **Google Colab** dengan tahap
 
 
 
-### Deteksi Bangunan
+## Deteksi Bangunan
 <div id="deteksibangunan"></div>
