@@ -30,27 +30,29 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set data berisi kumpulan citra satelit yang berisi gambar bangunan. Sampel akan digunakan pada proses training model untuk mempelajari dan mengenali karakteristik bangunan pada citra satelit. Pembuatan set data dilakukan dengan tahapan sebagai berikut:
 1. Menyiapkan citra satelit berukuran 600x600 piksel yang berisi objek bangunan, jumlah citra satelit yang direkomendasikan adalah 300 (menghasilkan akurasi deteksi >75%). Penamaan citra satelit disarankan mengikuti urutan angka (misal: 1.jpg, 2.jpg, ..., 300.jpg).
 2. Melakukan anotasi objek bangunan pada setiap citra satelit di set data menggunakan labelimg. Anotasi dilakukan dengan memberikan kotak pembatas dan label/nama pada setiap sampel bangunan. Anotasi akan menghasilkan file berekstensi XML untuk setiap citra pada set data (misal: 1.xml, 2.xml, ..., 300.xml).
-3. Setelah seluruh pasangan citra satelit dan anotasi objek bangunan selesai dibuat, kemudian buat folder baru untuk menyimpan set data dengan nama *Bangunan*.
-4. Dalam folder *Bangunan* kemudian buat dua folder baru dengan nama *train* dan *validation*.
+3. Setelah seluruh pasangan citra satelit dan anotasi objek bangunan selesai dibuat, kemudian buat folder baru untuk menyimpan set data dengan nama *bangunan*.
+4. Dalam folder *bangunan* kemudian buat dua folder baru dengan nama *train* dan *validation*.
 5. Pada masing-masing folder *train* dan *validation* kemudian buat dua folder baru dengan nama *images* dan *annotations*.
 6. Masukkan 80% set data ke dalam folder *train* dan 20% set data ke dalam folder *validation*. Dalam hal ini 80% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder *images* dan *annotations* pada folder *train*, dan 20% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder *images* dan *annotations* pada folder *validation*.
 6. Setelah hal di atas selesai dilakukan, akan terlihat struktur folder set data sebagai berikut:
    ```
-   >> train        >> images       >> 1.jpg
-                                      2.jpg
-                                      3.jpg
-                                      ...
-                   >> annotations  >> 1.xml
-                                      2.xml
-                                      3.xml
-                                      ...
-                                      
-   >> validation   >> images       >> ...
-                                      298.jpg
-                                      299.jpg
-                                      300.jpg
-                   >> annotations  >> ...
-                                      298.xml
-                                      299.xml
-                                      300.xml
+       >> bangunan----------->> train----------->> images----------->> 1.jpg
+             |                    |                                    2.jpg
+             |                    |                                    3.jpg
+             |                    |                                    ...
+             |                    |                            
+             |                     ------------>> annotations------->> 1.xml
+             |                                                         2.xml
+             |                                                         3.xml
+             |                                                         ...
+             |                        
+              -------------->> validation------>> images------------>> ...
+                                  |                                    298.jpg
+                                  |                                    299.jpg
+                                  |                                    300.jpg
+                                  |                            
+                                   ------------>> annotations------->> ...
+                                                                       298.xml
+                                                                       299.xml
+                                                                       300.xml
    ```
