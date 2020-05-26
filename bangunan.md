@@ -92,7 +92,7 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc1.png" width="900">
 2. Masuk ke laman (https://colab.research.google.com/), kemudian pilih *NEW NOTEBOOK*.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc2.png" width="900">
-3. Ganti nama file menjadi main.ipynb, kemudian tulis perintah berikut pada google colab:
+3. Ganti nama file menjadi main.ipynb, kemudian tulis daftar perintah berikut pada google colab:
    - menghubungkan google drive pada komputer
    ```python
    from google.colab import drive
@@ -115,7 +115,9 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
    !python training.py
    ```
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc3.png" width="900">
-   
+4. Setelah daftar perintah tersebut ditulis, kemudian pilih **Connect** ke komputer google colab menggunakan **runtime GPU**.
+5. Setelah terhubung ke komputer google colab, kemudian play satu-persatu daftar perintah yang telah dibuat pada bagian (3) dengan menekan tombol play di sebelah skrip kode yang telah ditulis.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
 ## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
