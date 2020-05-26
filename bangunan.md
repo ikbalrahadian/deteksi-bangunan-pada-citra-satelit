@@ -23,7 +23,6 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 - **VS Code** sebagai teks editor untuk melakukan pembuatan skrip kode training model dan deteksi bangunan dapat diunduh pada laman *Visual Studio Code* : (https://code.visualstudio.com/).
 - **Akun Google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
 
-
 ## Pembuatan Set Data
 <div id="pembuatansetdata"></div>
 
@@ -60,7 +59,7 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
 ### Pembuatan Skrip Kode Training Model
 <div id="pembuatanskripkode1"></div>
 
-Skrip kode untuk melakukan training model disimpan dalam format .py dan diberi nama *training.py*. Penulisan skrip kode dilakukan dengan menggunakan **VS Code** sebagai berikut:
+Penulisan skrip kode dilakukan dengan menggunakan **VS Code** dengan isi skrip kode sebagai berikut:
 ```python
 from imageai.Detection.Custom import DetectionModelTrainer
 trainer = DetectionModelTrainer()
@@ -82,14 +81,39 @@ Kode skrip diatas memiliki penjelasan untuk setiap baris sebagai berikut:
    - **train_from_pretrained_model** : berisi pretrained model yang akan digunakan
 6. Memulai proses training model
 
+Skrip kode untuk melakukan training model kemudian diberi nama *training* dan disimpan dalam format .py (training.py). 
+
+
 ## Training Model
 <div id="trainingmodel"></div>
 
-Sebelum melakukan training model, buat **akun Google baru** terlebih dahulu. Setelah akun Google yang baru telah dibuat, kemudian 
-Training model dilakukan menggunakan komputer dari **Google Colab** dengan tahapan sebagai berikut:
-1. 
-
-
+Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. Menggunakan akun baru yang telah dibuat, kemudian training model dilakukan dengan menggunakan komputer dari **Google Colab** melalui tahapan berikut:
+1. Mengunggah set data (folder 'bangunan'), pretrained model YOLOv3 ('yolov3.h5'), dan skrip kode ('training.py') ke dalam google drive.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc1.png" width="900">
+2. Masuk ke laman (https://colab.research.google.com/), kemudian pilih *NEW NOTEBOOK*.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc2.png" width="900">
+3. Ganti nama file menjadi main.ipynb, kemudian tulis perintah berikut pada google colab:
+   - menghubungkan google drive pada komputer
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
+   ```
+   - masuk ke direktori pada google drive
+   ```python
+   cd drive/My\ Drive
+   ```
+   - instalasi perangkat yang dibutuhkan
+   ```python
+   !pip install tensorflow-gpu==1.13.1
+   !pip install tensorflow_estimator==1.13.0
+   !pip install imageai --upgrade
+   !pip install opencv-python
+   !pip install keras
+   ```
+   - melakukan training model
+   ```python
+   !python training.py
+   ```
 ## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
