@@ -18,7 +18,7 @@ Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangu
 
 Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan adalah sebagai berikut:
 - **Citra satelit resolusi tinggi** sebagai bahan untuk membuat set data. Citra satelit dapat diunduh secara gratis dari laman *Open Data Program - DigitalGlobe* : (http://www.digitalglobe.com/ecosystem/open-data) untuk beberapa daerah terdampak bencana. Pada kasus ini citra satelit yang digunakan adalah wilayah Palu, Sulawesi Tengah yang mengalami tsunami pada tahun 2018.
-- **Pretrained model YOLOv3** sebagai model yang telah dilatih sebelumnya menggunakan set data COCO dapat diunduh pada laman *pjreddie* : (https://github.com/ikbalrahadian/deteksi-objek/releases/tag/pretrainedyolov3). Pretrained model memiliki format .h5 yang dapat dibuka pada Keras API dan akan dilatih untuk mendeteksi bangunan menggunakan set data baru.
+- **Pretrained model YOLOv3** sebagai model yang telah dilatih sebelumnya menggunakan set data COCO dapat diunduh pada laman berikut : (https://github.com/ikbalrahadian/deteksi-objek/releases). Pretrained model diunduh dari laman *pjreddie* dan telah dikonversi ke dalam format .h5 yang dapat dibuka pada Keras API. Pretrained ini akan dilatih untuk mendeteksi bangunan menggunakan set data baru.
 - **Labelimg** sebagai alat anotasi grafis dapat dicari dan diunduh pada laman : (https://github.com/tzutalin/labelImg). Labelimg digunakan sebagai Supervised Learning dengan memberikan anotasi pada sampel bangunan yang terdapat pada set data citra satelit. Anotasi akan disimpan sebagai file XML untuk masing-masing citra pada set data.
 - **VS Code** sebagai teks editor untuk melakukan pembuatan skrip kode training model dan deteksi bangunan dapat diunduh pada laman *Visual Studio Code* : (https://code.visualstudio.com/).
 - **Akun Google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
@@ -56,7 +56,7 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
    ```
 
 
-### Pembuatan Skrip Kode Training Model
+## Pembuatan Skrip Kode Training Model
 <div id="pembuatanskripkode1"></div>
 
 Penulisan skrip kode dilakukan dengan menggunakan **VS Code** dengan isi skrip kode sebagai berikut:
@@ -94,30 +94,38 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc2.png" width="900">
 3. Ganti nama file menjadi main.ipynb, kemudian tulis daftar perintah berikut pada google colab:
    - menghubungkan google drive pada komputer
-   ```python
-   from google.colab import drive
-   drive.mount('/content/drive')
-   ```
-   - masuk ke direktori pada google drive
-   ```python
-   cd drive/My\ Drive
-   ```
+     ```python
+     from google.colab import drive
+     drive.mount('/content/drive')
+     ```
+   - masuk ke direktori google drive pada komputer
+     ```python
+     cd drive/My\ Drive
+     ```
    - instalasi perangkat yang dibutuhkan
-   ```python
-   !pip install tensorflow-gpu==1.13.1
-   !pip install tensorflow_estimator==1.13.0
-   !pip install imageai --upgrade
-   !pip install opencv-python
-   !pip install keras
-   ```
+     ```python
+     !pip install tensorflow-gpu==1.13.1
+     !pip install tensorflow_estimator==1.13.0
+     !pip install imageai --upgrade
+     !pip install opencv-python
+     !pip install keras
+     ```
    - melakukan perintah training model
-   ```python
-   !python training.py
-   ```
+     ```python
+     !python training.py
+     ```
+   Beberapa daftar perintah diatas akan terlihat pada google colab sebagai berikut:
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc3.png" width="900">
 4. Setelah daftar perintah tersebut ditulis, kemudian pilih **Connect** ke komputer google colab menggunakan **runtime GPU**.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc5.png" width="900">
 5. Setelah terhubung ke komputer google colab, kemudian play satu-persatu daftar perintah yang telah dibuat pada bagian (3) dengan menekan tombol play di sebelah skrip kode yang telah ditulis.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
+6. Proses training model akan terlihat pada google colab sebagai berikut.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc6.png" width="900">
+7. Setelah seluruh epoch training model selesai dilakukan, akan dihasilkan folder *cache*, *json*, *logs*, dan *models* pada folder *bangunan*. Model hasil training dari setiap epoch akan berada pada foler *models*, dan konfigurasi model yang dihasilkan akan berada pada folder *json* terlihat seperti gambar sebagai berikut.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc7.png" width="900">
+   
+   
 ## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
