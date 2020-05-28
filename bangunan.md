@@ -129,7 +129,7 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
 ## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
-Skrip kode deteksi bangunan ditulis untuk melakukan proses deteksi bangunan pada input berupa citra satelit di area studi. Skrip kode ditulis menggunakan **VS Code** dengan format .py dan disimpan dengan nama *prediction* (prediction.py). Berikut adalah isi skrip kode deteksi bangunan.
+Skrip kode deteksi bangunan ditulis untuk melakukan proses deteksi bangunan pada input citra satelit area studi. Skrip kode ditulis menggunakan **VS Code** dengan format .py dan disimpan dengan nama *prediction* (prediction.py). Berikut adalah isi skrip kode deteksi bangunan dengan beberapa keterangan kode pada setiap baris diberi simbol #.
 
 ```python
 
