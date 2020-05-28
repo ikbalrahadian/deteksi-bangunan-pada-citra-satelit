@@ -27,11 +27,11 @@ Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan
 <div id="pembuatansetdata"></div>
 
 Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set data berisi kumpulan citra satelit yang berisi gambar bangunan. Sampel akan digunakan pada proses training model untuk mempelajari dan mengenali karakteristik bangunan pada citra satelit. Pembuatan set data dilakukan dengan tahapan sebagai berikut:
-1. Menyiapkan citra satelit berukuran 600x600 piksel yang berisi objek bangunan, jumlah citra satelit yang direkomendasikan adalah >300 (menghasilkan akurasi deteksi >75%). Penamaan citra satelit mengikuti urutan angka (misal: image_1.jpg, image_2.jpg, image_3.jpg, ... dst.).
+1. Menyiapkan citra satelit berukuran 600x600 piksel yang berisi objek bangunan, jumlah citra satelit yang direkomendasikan adalah >300 (menghasilkan akurasi deteksi >75%). Penamaan citra satelit disarankan mengikuti urutan angka (misal: 1.jpg, 2.jpg, 3.jpg, ... dst.).
 
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/dataset_image.JPG" width="900">
 
-2. Melakukan anotasi objek bangunan pada setiap citra satelit di set data menggunakan labelimg. Anotasi dilakukan dengan memberikan kotak pembatas dan label/nama pada setiap sampel bangunan. Anotasi akan menghasilkan file berekstensi XML untuk setiap citra pada set data (image_1.xml, image_2.xml, image_3.xml, ... dst.).
+2. Melakukan anotasi objek bangunan pada setiap citra satelit di set data menggunakan labelimg. Anotasi dilakukan dengan memberikan kotak pembatas dan label/nama pada setiap sampel bangunan. Anotasi akan menghasilkan file berekstensi XML untuk setiap citra pada set data (1.xml, 2.xml, 3.xml, ... dst.).
 
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/labelling.png" width="900">
 
@@ -41,18 +41,18 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
 6. Masukkan 80% set data ke dalam folder ***train*** dan 20% set data ke dalam folder ***validation***. Dalam hal ini 80% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder ***images*** dan ***annotations*** pada folder ***train***, dan 20% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder ***images*** dan ***annotations*** pada folder ***validation***.
 6. Setelah hal di atas selesai dilakukan, akan terlihat struktur folder set data sebagai berikut:
    ```
-       >> bangunan----------->> train---------->> images------------>> image_1.jpg
+       >> bangunan----------->> train---------->> images------------>> 1.jpg
              |                    |                                    ...
-             |                    |                                    image_240.jpg
-             |                     ------------>> annotations------->> image_1.xml
+             |                    |                                    240.jpg
+             |                     ------------>> annotations------->> 1.xml
              |                                                         ...
-             |                                                         image_240.xml
-              -------------->> validation------>> images------------>> image_241.jpg
+             |                                                         240.xml
+              -------------->> validation------>> images------------>> 241.jpg
                                   |                                    ...
-                                  |                                    image_300.jpg
-                                   ------------>> annotations------->> image_241.xml
+                                  |                                    300.jpg
+                                   ------------>> annotations------->> 241.xml
                                                                        ...
-                                                                       image_300.xml
+                                                                       300.xml
    ```
 
 
@@ -151,10 +151,10 @@ if (os.path.isdir('summary')) == False:
 if (os.path.isdir('entirety')) == False:
     os.mkdir('entirety')
 
-# object detection
+# konfigurasi deteksi objek
 detector = CustomObjectDetection()
 detector.setModelTypeAsYOLOv3()
-detector.setModelPath("detection_model-ex-029--loss-0039.394.h5")
+detector.setModelPath("masukkan_nama_file_model_yang_akan_digunakan_disini")
 detector.setJsonPath("detection_config.json")
 detector.loadModel()
 
@@ -393,9 +393,9 @@ fig_all.savefig('./entirety/plot_all.png', dpi=(300))
 
 ```
 
-Skrip kode diatas ditulis untuk mendeteksi bangunan dengan input berupa 77 citra satelit dengan masing-masing ukuran input 1200x1200 piksel. 77 citra satelit input terlihat pada gambar sebagai berikut.
+Skrip kode diatas ditulis untuk mendeteksi bangunan dengan input berupa 77 citra satelit pada area studi dengan masing-masing ukuran input 1200x1200 piksel. 77 citra satelit input terlihat pada gambar berikut.
 <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc8.png" width="900">
-dengan urutan nama dan posisi file input sebagai berikut.
+dengan penamaan dan urutan posisi file input sebagai berikut.
 ```
 image_1 image_8  image_15 image_22 image_29 image_36 image_43 image_50 image_57 image_64 image_71
 image_2 image_9  image_16 image_23 image_30 image_37 image_44 image_51 image_58 image_65 image_72
@@ -406,5 +406,24 @@ image_6 image_13 image_20 image_27 image_34 image_41 image_48 image_55 image_62 
 image_7 image_14 image_21 image_28 image_35 image_42 image_49 image_56 image_63 image_70 image_77
 ```
 
+Untuk menggunakan skrip kode deteksi bangunan diatas, ganti "masukkan_nama_file_model_yang_akan_digunakan_disini" pada bagian # konfigurasi deteksi objek dengan nama file dari model yang dihasilkan pada proses training (misal: detection_model-ex-062--loss-0033.151.h5).
+
 ## Deteksi Bangunan
 <div id="deteksibangunan"></div>
+
+Deteksi bangunan dilakukan dengan menjalankan skrip kode deteksi bangunan yang telah dibuat sebelumnya (prediction.py). Proses ini akan mendeteksi bangunan yang ada pada masing-masing citra satelit input. Deteksi bangunan dilakukan dengan membuat struktur folder dan file pada google drive terlebih dahulu sebagai berikut.
+```
+       >> deteksi_bangunan--->> input------->> image_1.jpg
+             |                                 image_2.jpg
+             |                                 ...
+             |                                 image_77.jpg
+             |
+              --------------->> detection_config.json (dari jolder json)
+             |
+              --------------->> file_model_yang_digunakan.h5 (dari folder models)
+             |
+              --------------->> prediction.py (skrip kode deteksi bangunan)
+```
+
+Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteksi bangunan pada input citra satelit dilakukan dengan menjalankan skrip kode prediction.py menggunakan google colab dengan langkah sebagai berikut.
+1. 
