@@ -18,7 +18,7 @@ Pada laman ini akan dijelaskan alur pembuatan model untuk mendeteksi objek bangu
 
 Untuk memulai pembuatan model deteksi bangunan beberapa hal yang perlu disiapkan adalah sebagai berikut:
 - **Citra satelit resolusi tinggi** sebagai bahan untuk membuat set data. Citra satelit dapat diunduh secara gratis dari laman *Open Data Program - DigitalGlobe* : (http://www.digitalglobe.com/ecosystem/open-data) untuk beberapa daerah terdampak bencana. Pada kasus ini citra satelit yang digunakan adalah wilayah Palu, Sulawesi Tengah yang mengalami tsunami pada tahun 2018.
-- **Pretrained model YOLOv3** sebagai model yang telah dilatih sebelumnya menggunakan set data COCO dapat diunduh pada laman berikut : (https://github.com/ikbalrahadian/deteksi-objek/releases). Pretrained model diunduh dari laman *pjreddie* dan telah dikonversi ke dalam format .h5 yang dapat dibuka pada Keras API. Pretrained ini akan dilatih untuk mendeteksi bangunan menggunakan set data baru.
+- **Pretrained model YOLOv3** sebagai model yang telah dilatih sebelumnya menggunakan set data COCO dapat diunduh pada laman berikut : (https://github.com/ikbalrahadian/deteksi-objek/releases). Pretrained model diunduh dari laman *pjreddie* dan telah dikonversi dari format .weight ke dalam format .h5 yang dapat dibuka pada Keras API. Pretrained ini akan dilatih untuk mendeteksi bangunan menggunakan set data baru.
 - **Labelimg** sebagai alat anotasi grafis dapat dicari dan diunduh pada laman : (https://github.com/tzutalin/labelImg). Labelimg digunakan sebagai Supervised Learning dengan memberikan anotasi pada sampel bangunan yang terdapat pada set data citra satelit. Anotasi akan disimpan sebagai file XML untuk masing-masing citra pada set data.
 - **VS Code** sebagai teks editor untuk melakukan pembuatan skrip kode training model dan deteksi bangunan dapat diunduh pada laman *Visual Studio Code* : (https://code.visualstudio.com/).
 - **Akun Google baru** untuk menyediakan gdrive yang memiliki cukup kapasitas untuk menampung hasil training model yang dapat dibuat pada laman *Google* : (https://accounts.google.com/signup).
@@ -120,7 +120,7 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc5.png" width="900">
 5. Setelah terhubung ke komputer google colab, kemudian play satu-persatu daftar perintah yang telah dibuat pada bagian (3) dengan menekan tombol play di sebelah skrip kode yang telah ditulis.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
-6. Proses training model akan terlihat pada google colab sebagai berikut.
+6. Proses training model akan terlihat pada google colab sebagai berikut. Lamannya proses training model bergantung pada jumlah iterasi yang dilakukan.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc6.png" width="900">
 7. Setelah seluruh epoch training model selesai dilakukan, akan dihasilkan folder *cache*, *json*, *logs*, dan *models* pada folder *bangunan*. Model hasil training dari setiap epoch akan berada pada foler *models*, dan konfigurasi model yang dihasilkan akan berada pada folder *json* terlihat seperti gambar sebagai berikut.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc7.png" width="900">
@@ -129,6 +129,267 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
 ## Pembuatan Skrip Kode Deteksi Bangunan
 <div id="pembuatanskripkode2"></div>
 
+Skrip kode deteksi bangunan ditulis untuk melakukan proses deteksi bangunan pada input berupa citra satelit di area studi. Skrip kode ditulis menggunakan **VS Code** dengan format .py dan disimpan dengan nama *prediction* (prediction.py). Berikut adalah isi skrip kode deteksi bangunan.
+
+```python
+
+# import pustaka
+from imageai.Detection.Custom import CustomObjectDetection
+from PIL import Image
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import xlsxwriter
+import os
+
+# membuat direktori baru
+if (os.path.isdir('output')) == False:
+    os.mkdir('output')
+if (os.path.isdir('coordinate')) == False:
+    os.mkdir('coordinate')
+if (os.path.isdir('summary')) == False:
+    os.mkdir('summary')
+if (os.path.isdir('entirety')) == False:
+    os.mkdir('entirety')
+
+# object detection
+detector = CustomObjectDetection()
+detector.setModelTypeAsYOLOv3()
+detector.setModelPath("detection_model-ex-029--loss-0039.394.h5")
+detector.setJsonPath("detection_config.json")
+detector.loadModel()
+
+# plot semua koordinat
+valuex_dot_all = 0
+valuey_dot_all = 0
+plotx_dot_all = []
+ploty_dot_all = []
+number_image_row = 6
+number_image_col = 0
+check_img_last = Image.open("./input/image_6.jpg")
+width_image_last, height_image_last = check_img_last.size
+
+# membuat file all
+workbook_all = xlsxwriter.Workbook('./entirety/plot_all.xlsx')
+worksheet_all = workbook_all.add_worksheet()
+# konfigurasi header pada excel (baris pertama)
+worksheet_all.write(0, 0, 'No')
+worksheet_all.write(0, 1, 'Confidence Level')
+worksheet_all.write(0, 2, 'X1')
+worksheet_all.write(0, 3, 'Y1')
+worksheet_all.write(0, 4, 'X2')
+worksheet_all.write(0, 5, 'Y2')
+worksheet_all.write(0, 6, 'X')
+worksheet_all.write(0, 7, 'Y')
+
+# membuat file review all
+workbook_review_all = xlsxwriter.Workbook('./entirety/review_all.xlsx')
+worksheet_review_all = workbook_review_all.add_worksheet()
+# konfigurasi header pada excel (baris pertama)
+worksheet_review_all.write(0, 0, 'No')
+worksheet_review_all.write(0, 1, 'Image')
+worksheet_review_all.write(0, 2, 'No Building')
+worksheet_review_all.write(0, 3, 'Confidence Level')
+worksheet_review_all.write(0, 4, 'X1')
+worksheet_review_all.write(0, 5, 'Y1')
+worksheet_review_all.write(0, 6, 'X2')
+worksheet_review_all.write(0, 7, 'Y2')
+worksheet_review_all.write(0, 9, 'Image')
+worksheet_review_all.write(0, 10, 'Buildings Detected')
+worksheet_review_all.write(0, 11, 'Average Confidence Level')
+row_excel_all = 1
+sum_data_percentage_all = 0
+average_percentage_all = 0
+
+for j in range(1, 61):
+    # konfigurasi output
+    detections = detector.detectObjectsFromImage(display_object_name=False, display_percentage_probability=False, input_image="./input/image_" + str(j) + ".jpg", output_image_path="./output/output_" + str(j) + ".jpg")
+    workbook = xlsxwriter.Workbook('./coordinate/output_' + str(j) + '.xlsx')
+    worksheet = workbook.add_worksheet()
+    # konfigurasi header pada excel (baris pertama)
+    worksheet.write(0, 0, 'No')
+    worksheet.write(0, 1, 'Confidence Level')
+    worksheet.write(0, 2, 'X1')
+    worksheet.write(0, 3, 'Y1')
+    worksheet.write(0, 4, 'X2')
+    worksheet.write(0, 5, 'Y2')
+    # konfigurasi posisi output
+    row_excel = 1
+    sum_data_percentage = 0
+    plotx_dot = []
+    ploty_dot = []
+    valuex_dot = 0
+    valuey_dot = 0
+    plotx_percent = []
+    ploty_percent = []
+    for i in range(100):
+        plotx_percent.append(i)
+        ploty_percent.append(0)
+
+    # membaca ukuran gambar dalam pixel yang ditaruh ke variabel width dan height
+    img = Image.open("./input/image_" + str(j) + ".jpg")
+    width_image, height_image = img.size
+
+    # posisi gambar dalam matriks 7 x 11
+    # |1 8  15 22 29 36 43 50 57 64 71|
+    # |2 9  16 23 30 37 44 51 58 65 72|
+    # |3 10 17 24 31 38 45 52 59 66 73|
+    # |4 11 18 25 32 39 46 53 60 67 74|
+    # |5 12 19 26 33 40 47 54 61 68 75|
+    # |6 13 20 27 34 41 48 55 62 69 76|
+    # |7 14 21 28 35 42 49 56 63 70 77|
+
+    # number image dalam (col,row)
+    # (0,6)...................(10,6)
+    # (0,5)...................(10,5)
+    # (0,4)...................(10,4)
+    # (0,3)...................(10,3)
+    # (0,2)...................(10,2)
+    # (0,1)...................(10,1)
+    # (0,0)...................(10,0)
+
+    move_vertical = 0
+    move_horizontal = 0
+    if  number_image_row <= 0:
+        number_image_row = 6
+        number_image_col = number_image_col + 1
+    else:
+        number_image_col = number_image_col
+        
+    number_image_row = number_image_row - 1
+
+    # mengatur pergeseran ke samping sejauh posisi (dalam pixel)
+    move_horizontal = number_image_col*width_image_last
+
+    # pergeseran image terdeteksi bila berada di posisi paling bawah
+    if number_image_row <= 0:
+        move_vertical = 0
+    else:
+        move_vertical = height_image_last + (number_image_row-1)*height_image #mengatur pergeseran keatas sejauh posisi dia dalam pixel
+    
+    # looping sebanyak bangunan yang terdeteksi
+    for detection in detections:
+        valuex_dot = (detection["box_points"][0] + detection["box_points"][2]) / 2
+        valuey_dot = ((detection["box_points"][1] + detection["box_points"][3]) / -2) + height_image
+        plotx_dot.append(valuex_dot)
+        ploty_dot.append(valuey_dot)
+
+        valuex_dot_all = valuex_dot + move_horizontal
+        valuey_dot_all = valuey_dot + move_vertical
+        plotx_dot_all.append(valuex_dot_all)
+        ploty_dot_all.append(valuey_dot_all)
+
+        # plot semua koordinat pada plot_all.xlsx
+        worksheet_all.write(row_excel_all, 0, row_excel_all)
+        worksheet_all.write(row_excel_all, 1, int(detection["percentage_probability"]))
+        worksheet_all.write(row_excel_all, 2, detection["box_points"][0] + move_horizontal)
+        worksheet_all.write(row_excel_all, 3, detection["box_points"][1] + move_vertical)
+        worksheet_all.write(row_excel_all, 4, detection["box_points"][2] + move_horizontal)
+        worksheet_all.write(row_excel_all, 5, detection["box_points"][3] + move_vertical)
+        worksheet_all.write(row_excel_all, 6, valuex_dot_all)
+        worksheet_all.write(row_excel_all, 7, valuey_dot_all)
+
+        # plot persentase
+        ploty_percent[int(detection["percentage_probability"])] = ploty_percent[int(detection["percentage_probability"])] + 1
+
+        # menjumlahkan data persentase semuanya (untuk mencari rata-rata)
+        sum_data_percentage = sum_data_percentage + int(detection["percentage_probability"])
+
+        # menulis pada excel output
+        worksheet.write(row_excel, 0, row_excel)
+        worksheet.write(row_excel, 1, int(detection["percentage_probability"]))
+        worksheet.write(row_excel, 2, detection["box_points"][0])
+        worksheet.write(row_excel, 3, detection["box_points"][1])
+        worksheet.write(row_excel, 4, detection["box_points"][2])
+        worksheet.write(row_excel, 5, detection["box_points"][3])
+
+        # menjumlahkan seluruh data persentase  
+        sum_data_percentage_all = sum_data_percentage_all + int(detection["percentage_probability"])
+
+        # menulis di excel all
+        worksheet_review_all.write(row_excel_all, 0, row_excel_all)
+        worksheet_review_all.write(row_excel_all, 1, j)
+        worksheet_review_all.write(row_excel_all, 2, row_excel)
+        worksheet_review_all.write(row_excel_all, 3, int(detection["percentage_probability"]))
+        worksheet_review_all.write(row_excel_all, 4, detection["box_points"][0])
+        worksheet_review_all.write(row_excel_all, 5, detection["box_points"][1])
+        worksheet_review_all.write(row_excel_all, 6, detection["box_points"][2])
+        worksheet_review_all.write(row_excel_all, 7, detection["box_points"][3])
+        
+        # sebagai row tambahan di excel dan sebagai indikator jumlah data
+        row_excel += 1 # untuk file satuan
+        row_excel_all += 1 # untuk file all
+
+    # mendapat nilai rata-rata persentase
+    if sum_data_percentage != 0:
+        average_percentage = sum_data_percentage / (row_excel-1)
+    else:
+        average_percentage = 0
+
+    # menuliskan nilai rata-rata di output_x.xlsx 
+    worksheet.write(row_excel + 1, 0, 'Average Percentage: ')
+    worksheet.write(row_excel + 1, 1, average_percentage)
+    workbook.close()  # menutup excel
+
+    # menulis average data pada review_all.xlsx
+    worksheet_review_all.write(j, 9, j)
+    worksheet_review_all.write(j, 10, (row_excel-1))
+    worksheet_review_all.write(j, 11, average_percentage)
+
+    # input gambar awal dan akhir
+    img_input = mpimg.imread("./input/image_" + str(j) + ".jpg")
+    img_output = mpimg.imread("./output/output_" + str(j) + ".jpg")
+
+    # membagi window menjadi 4 bagian, bentuk dalam array 2 dimensi, 00-(kiri-atas) 01-(kanan-atas) 10-(kiri-bawah) 11-(kanan-bawah)
+    fig, loc = plt.subplots(2, 2)
+
+    # memplot window 00
+    loc[0, 0].imshow(img_input)  # plot gambar
+    loc[0, 0].set_title('Citra Satelit')  # title
+
+    # memplot window 01
+    loc[0, 1].plot(plotx_dot, ploty_dot, 'ro', ms=0.5)
+    loc[0, 1].set_title('Sebaran Bangunan')
+    loc[0, 1].set_ylim(0, height_image)
+    loc[0, 1].set_xlim(0, width_image)
+
+    # memplot window 10
+    loc[1, 0].imshow(img_output)
+    loc[1, 0].set_title('Bangunan Terdeteksi')
+
+    # memplot window 11
+    loc[1, 1].plot(plotx_percent, ploty_percent)
+    loc[1, 1].set_title('Tingkat Kepercayaan Deteksi Bangunan')
+
+    # menampilkan tulisan jumlah dan rata-rata dibawah window 10
+    jumlah = 'Jumlah bangunan terdeteksi: ' + str(row_excel-1) + ' bangunan'
+    average = 'Rerata tingkat kepercayaan deteksi bangunan: ' + str("%.2f" % average_percentage) + ' %'
+    loc[1, 0].text(0, 1300, jumlah)  # 0,1300 adalah posisi dalam pixel
+    loc[1, 0].text(0, 1350, average)
+    
+    # save window
+    fig.set_size_inches((11, 11), forward=False)
+    fig.savefig('./summary/output_' + str(j) + '.png', dpi=(300))
+    plt.close()
+
+average_percentage_all = sum_data_percentage_all / (row_excel_all - 1)
+worksheet_review_all.write(j+1, 9, 'Summary')
+worksheet_review_all.write(j+1, 10, (row_excel_all-1))
+worksheet_review_all.write(j+1, 11, average_percentage_all)
+workbook_review_all.close()  # menutup excel
+
+worksheet_all.write(row_excel_all + 1, 0, 'Average Percentage: ')
+worksheet_all.write(row_excel_all + 1, 1, average_percentage_all)
+workbook_all.close()  # menutup excel
+
+#membuat window baru untuk plot semua koordinat
+fig_all, loc_all = plt.subplots()
+loc_all.plot(plotx_dot_all, ploty_dot_all, 'ro', ms=0.5)
+loc_all.set_title('Sebaran Bangunan Terdeteksi')
+loc_all.set_ylim(0, 6500)
+loc_all.set_xlim(0, 10900)
+fig_all.savefig('./entirety/plot_all.png', dpi=(300))
+
+```
 
 
 ## Deteksi Bangunan
