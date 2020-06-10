@@ -41,18 +41,25 @@ Untuk membuat model deteksi bangunan diperlukan set data sebagai sampel. Set dat
 6. Masukkan 80% set data ke dalam folder ***train*** dan 20% set data ke dalam folder ***validation***. Dalam hal ini 80% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder ***images*** dan ***annotations*** pada folder ***train***, dan 20% pasangan citra (.jpg) dan anotasi (.xml) masing-masing dimasukkan ke dalam folder ***images*** dan ***annotations*** pada folder ***validation***.
 6. Setelah hal di atas selesai dilakukan, akan terlihat struktur folder set data sebagai berikut:
    ```
-       >> bangunan----------->> train---------->> images------------>> 1.jpg
-             |                    |                                    ...
-             |                    |                                    240.jpg
-             |                     ------------>> annotations------->> 1.xml
-             |                                                         ...
-             |                                                         240.xml
-              -------------->> validation------>> images------------>> 241.jpg
-                                  |                                    ...
-                                  |                                    300.jpg
-                                   ------------>> annotations------->> 241.xml
-                                                                       ...
-                                                                       300.xml
+       >> bangunan
+             |
+             ----------->> train   
+             |                |
+             |                ------------>> images------------>> 1.jpg
+             |                |                                   ...
+             |                |                                   240.jpg
+             |                ------------>> annotations------->> 1.xml
+             |                                                    ...
+             |                                                    240.xml
+             |                                                        
+              --------->> validation
+                             |
+                             ------------->> images------------>> 241.jpg
+                             |                                    ...
+                             |                                    300.jpg
+                             ------------->> annotations------->> 241.xml
+                                                                  ...
+                                                                  300.xml
    ```
 
 
@@ -413,17 +420,48 @@ Untuk menggunakan skrip kode deteksi bangunan diatas, ganti "masukkan_nama_file_
 
 Deteksi bangunan dilakukan dengan menjalankan skrip kode deteksi bangunan yang telah dibuat sebelumnya (prediction.py). Proses ini akan mendeteksi bangunan yang ada pada masing-masing citra satelit input. Deteksi bangunan dilakukan dengan membuat struktur folder dan file pada google drive terlebih dahulu sebagai berikut.
 ```
-       >> deteksi_bangunan--->> input------->> image_1.jpg
-             |                                 image_2.jpg
-             |                                 ...
-             |                                 image_77.jpg
+       >> deteksi_bangunan
              |
-              --------------->> detection_config.json (dari jolder json)
+             -------->> input------------------------------------------------>> image_1.jpg
+             |                                                                  image_2.jpg
+             |                                                                  ...
+             |                                                                  image_77.jpg
              |
-              --------------->> file_model_yang_digunakan.h5 (dari folder models)
+             -------->> detection_config.json (dari jolder json)
              |
-              --------------->> prediction.py (skrip kode deteksi bangunan)
+             -------->> file_model_yang_digunakan.h5 (dari folder models)
+             |
+             -------->> prediction.py (skrip kode deteksi bangunan)
 ```
 
 Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteksi bangunan pada input citra satelit dilakukan dengan menjalankan skrip kode prediction.py menggunakan google colab dengan langkah sebagai berikut.
-1. 
+1. Masuk ke laman (https://colab.research.google.com/), kemudian pilih *NEW NOTEBOOK*.
+2. Ganti nama file menjadi main2.ipynb, kemudian tulis daftar perintah berikut pada google colab:
+   - menghubungkan google drive pada komputer
+     ```python
+     from google.colab import drive
+     drive.mount('/content/drive')
+     ```
+   - masuk ke direktori google drive pada komputer
+     ```python
+     cd drive/My\ Drive/deteksi_bangunan
+     ```
+   - instalasi perangkat yang dibutuhkan
+     ```python
+     !pip install tensorflow-gpu==1.13.1
+     !pip install tensorflow_estimator==1.13.0
+     !pip install imageai --upgrade
+     !pip install opencv-python
+     !pip install keras
+     ```
+   - melakukan perintah deteksi bangunan
+     ```python
+     !python prediction.py
+     ```
+3. Setelah daftar perintah tersebut ditulis, kemudian pilih **Connect** ke komputer google colab menggunakan **runtime GPU**.
+  <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc5.png" width="900">
+4. Setelah terhubung ke komputer google colab, kemudian play satu-persatu daftar perintah yang telah dibuat pada bagian (2) dengan menekan tombol play di sebelah skrip kode yang telah ditulis.
+   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
+5. Proses deteksi bangunan akan terlihat pada google colab sebagai berikut.
+   
+6. Setelah deteksi bangunan selesai dilakukan, akan dihasilkan folder *coordinate*, *entirety*, *input*, *output*, dan *summary* pada folder *deteksi_bangunan*.
