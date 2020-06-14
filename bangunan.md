@@ -97,9 +97,9 @@ Skrip kode untuk melakukan training model kemudian diberi nama *training* dan di
 Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. Menggunakan akun baru yang telah dibuat, kemudian training model dilakukan dengan menggunakan komputer dari **Google Colab** melalui tahapan berikut:
 1. Mengunggah set data (folder 'bangunan'), pretrained model YOLOv3 ('yolov3.h5'), dan skrip kode ('training.py') ke dalam google drive.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc1.png" width="900">
-2. Masuk ke laman (https://colab.research.google.com/), kemudian pilih *NEW NOTEBOOK*.
+2. Masuk ke laman (https://colab.research.google.com/), kemudian pilih ***NEW NOTEBOOK***.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc2.png" width="900">
-3. Ganti nama file menjadi main.ipynb, kemudian tulis daftar perintah berikut pada google colab:
+3. Ganti nama file menjadi **main.ipynb**, kemudian tulis daftar perintah berikut pada google colab:
    - menghubungkan google drive pada komputer
      ```python
      from google.colab import drive
@@ -129,7 +129,7 @@ Sebelum melakukan training model, dibuat **akun Google baru** terlebih dahulu. M
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
 6. Proses training model akan terlihat pada google colab sebagai berikut. Lamannya proses training model bergantung pada jumlah iterasi yang dilakukan.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc6.png" width="900">
-7. Setelah seluruh epoch training model selesai dilakukan, akan dihasilkan folder *cache*, *json*, *logs*, dan *models* pada folder *bangunan*. Model hasil training dari setiap epoch akan berada pada foler *models*, dan konfigurasi model yang dihasilkan akan berada pada folder *json* terlihat seperti gambar sebagai berikut.
+7. Setelah seluruh epoch training model selesai dilakukan, akan dihasilkan folder ***cache***, ***json***, ***logs***, dan ***models*** pada folder ***bangunan***. Model hasil training dari setiap epoch akan berada pada foler *models*, dan konfigurasi model yang dihasilkan akan berada pada folder *json* terlihat seperti gambar sebagai berikut.
    <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc7.png" width="900">
    
    
@@ -435,8 +435,8 @@ Deteksi bangunan dilakukan dengan menjalankan skrip kode deteksi bangunan yang t
 ```
 
 Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteksi bangunan pada input citra satelit dilakukan dengan menjalankan skrip kode prediction.py menggunakan google colab dengan langkah sebagai berikut.
-1. Masuk ke laman (https://colab.research.google.com/), kemudian pilih *NEW NOTEBOOK*.
-2. Ganti nama file menjadi main2.ipynb, kemudian tulis daftar perintah berikut pada google colab:
+1. Masuk ke laman (https://colab.research.google.com/), kemudian pilih ***NEW NOTEBOOK***.
+2. Ganti nama file menjadi **main2.ipynb**, kemudian tulis daftar perintah berikut pada google colab:
    - menghubungkan google drive pada komputer
      ```python
      from google.colab import drive
@@ -459,9 +459,14 @@ Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteks
      !python prediction.py
      ```
 3. Setelah daftar perintah tersebut ditulis, kemudian pilih **Connect** ke komputer google colab menggunakan **runtime GPU**.
-  <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc5.png" width="900">
 4. Setelah terhubung ke komputer google colab, kemudian play satu-persatu daftar perintah yang telah dibuat pada bagian (2) dengan menekan tombol play di sebelah skrip kode yang telah ditulis.
-   <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc4.png" width="900">
 5. Proses deteksi bangunan akan terlihat pada google colab sebagai berikut.
-   
-6. Setelah deteksi bangunan selesai dilakukan, akan dihasilkan folder *coordinate*, *entirety*, *input*, *output*, dan *summary* pada folder *deteksi_bangunan*.
+6. Setelah deteksi bangunan selesai dilakukan, akan dihasilkan folder ***coordinate***, ***entirety***, ***input***, ***output***, dan ***summary*** pada folder ***deteksi_bangunan*** dengan keterangan masing-masing folder sebagai berikut.
+   - **coordinate** : berisi data koordinat bangunan terdeteksi dalam sistem koordinat gambar untuk setiap input citra dan ditulis dalam format .xlsx, dengan X1,Y1 dan X2,Y2 merupakan koordinat kiri bawah dan kanan atas kotak pembatas setiap bangunan terdeteksi.
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc9.png" width="900">
+   - **entirety** : berisi data koordinat bangunan terdeteksi seluruh input citra dalam sistem koordinat gabungan dan ditulis dalam format .xlsx, dengan X,Y merupakan koordinat centroid bangunan terdeteksi. selain itu pada folder ini terdapat plot titik koordinat bangunan terdeteksi seluruh input dalam sistem koordinat gabungan dan ditulis dalam format .png.
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc10.png" width="900"> <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc11.png" width="900">
+   - **output** : berisi citra output dengan kotak pembatas pada setiap bangunan terdeteksi dari setiap input citra dalam format .jpg
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc13.png" width="900">
+   - **summary** : berisi gambar berupa citra input, citra output, plot bangunan terdeteksi, dan grafik tingkat kepercayaan untuk setiap input citra.
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc14.png" width="900">
