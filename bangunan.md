@@ -463,10 +463,13 @@ Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteks
 5. Proses deteksi bangunan akan terlihat pada google colab sebagai berikut.
 6. Setelah deteksi bangunan selesai dilakukan, akan dihasilkan folder ***coordinate***, ***entirety***, ***input***, ***output***, dan ***summary*** pada folder ***deteksi_bangunan*** dengan keterangan masing-masing folder sebagai berikut.
    - **coordinate** : berisi data koordinat bangunan terdeteksi dalam sistem koordinat gambar untuk setiap input citra dan ditulis dalam format .xlsx, dengan X1,Y1 dan X2,Y2 merupakan koordinat kiri bawah dan kanan atas kotak pembatas setiap bangunan terdeteksi.
-     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc9.PNG" width="900">
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc9.png" width="900">
    - **entirety** : berisi data koordinat bangunan terdeteksi seluruh input citra dalam sistem koordinat gabungan dan ditulis dalam format .xlsx, dengan X,Y merupakan koordinat centroid bangunan terdeteksi. selain itu pada folder ini terdapat plot titik koordinat bangunan terdeteksi seluruh input dalam sistem koordinat gabungan dan ditulis dalam format .png.
-     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc10.PNG" width="900"> <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc11.png" width="900">
+     <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc10.png" width="900"> <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc11.png" width="900">
    - **output** : berisi citra output dengan kotak pembatas pada setiap bangunan terdeteksi dari setiap input citra dalam format .jpg
      <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc13.png" width="900">
    - **summary** : berisi gambar berupa citra input, citra output, plot bangunan terdeteksi, dan grafik tingkat kepercayaan untuk setiap input citra.
      <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc14.png" width="900">
+     
+Seluruh bahan untuk melakukan tutorial pada laman ini dapat di download pada pranala berikut.
+
