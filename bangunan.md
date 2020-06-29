@@ -471,5 +471,5 @@ Setelah struktur folder dan file pada google drive telah dibuat, kemudian deteks
    - **summary** : berisi gambar berupa citra input, citra output, plot bangunan terdeteksi, dan grafik tingkat kepercayaan untuk setiap input citra.
      <img src="https://github.com/ikbalrahadian/deteksi-objek/blob/master/sc14.png" width="900">
      
-Seluruh bahan untuk melakukan tutorial pada laman ini dapat di download pada pranala berikut.
+Seluruh bahan untuk melakukan tutorial pada laman ini dapat di download pada pranala berikut : https://github.com/ikbalrahadian/deteksi-objek/releases.
 
